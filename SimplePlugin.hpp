@@ -51,6 +51,10 @@ class SimplePlugin
     void InitializePlugin(const QJsonObject &) override
     {
     }
+    const QIcon Icon() const override
+    {
+        return QIcon(":/qv2ray.png");
+    }
     const QJsonObject GetPluginSettngs() override
     {
         return {};

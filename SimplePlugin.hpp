@@ -43,7 +43,11 @@ class SimplePlugin
     {
         return {};
     }
-    QObject *GetKernelInstance() override
+    QObject *GetQObject() override
+    {
+        return this;
+    }
+    Qv2rayKernelPlugin *GetKernelInstance() override
     {
         return nullptr;
     }

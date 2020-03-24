@@ -5,16 +5,18 @@
 #include <QObject>
 #include <QtPlugin>
 
+class QLabel;
+
 class SimplePlugin
     : public QObject
-    , Qv2rayInterface
+    , Qv2ray::Qv2rayInterface
 {
-    Q_INTERFACES(Qv2rayInterface)
+    Q_INTERFACES(Qv2ray::Qv2rayInterface)
     Q_PLUGIN_METADATA(IID Qv2rayInterface_IID)
     Q_OBJECT
   public:
-    QV2RAY_PLUGIN_HOOK_TYPE_FLAGS PluginHooks() const override;
-    QV2RAY_SPECIAL_PLUGIN_TYPE SpecialPluginType() const override;
+    Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE_FLAGS PluginHooks() const override;
+    Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE SpecialPluginType() const override;
     //
     // Basic metainfo of this plugin
     QString Name() const override;
@@ -24,16 +26,19 @@ class SimplePlugin
     //
     QStringList OutboundTypes() const override;
     //
-    const QMap<QV2RAY_PLUGIN_UI_TYPE, QWidget *> GetUIWidgets() override;
+    const QWidget *GetUIWidgets(Qv2ray::QV2RAY_PLUGIN_UI_TYPE) override;
     QObject *GetQObject() override;
-    Qv2rayKernelPlugin *GetKernelInstance() override;
+    Qv2ray::Qv2rayKernelPlugin *GetKernelInstance() override;
     //
     void InitializePlugin(const QJsonObject &) override;
     const QIcon Icon() const override;
     const QJsonObject GetPluginSettngs() override;
     //
     /// The hook function, for SPECIAL_TYPE_NONE
-    void PluginHook(QV2RAY_PLUGIN_HOOK_TYPE, QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant) override;
+    void PluginHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant) override;
   signals:
     void PluginLog(const QString &) const override;
+
+  private:
+    QLabel *pluginWidget;
 };

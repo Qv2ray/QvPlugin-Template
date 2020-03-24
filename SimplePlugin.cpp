@@ -1,5 +1,8 @@
 #include "SimplePlugin.hpp"
 
+#include <QDateTime>
+#include <QLabel>
+
 QString SimplePlugin::Name() const
 {
     return "Simple Plugin";
@@ -27,7 +30,7 @@ QStringList SimplePlugin::OutboundTypes() const
     return {};
 }
 
-Qv2rayKernelPlugin *SimplePlugin::GetKernelInstance()
+Qv2ray::Qv2rayKernelPlugin *SimplePlugin::GetKernelInstance()
 {
     emit PluginLog("Getting kernel instance.");
     return nullptr;
@@ -36,6 +39,7 @@ Qv2rayKernelPlugin *SimplePlugin::GetKernelInstance()
 void SimplePlugin::InitializePlugin(const QJsonObject &)
 {
     emit PluginLog("Initialize plugin.");
+    pluginWidget = new QLabel;
 }
 
 const QIcon SimplePlugin::Icon() const
@@ -56,25 +60,36 @@ QObject *SimplePlugin::GetQObject()
     return this;
 }
 
-const QMap<QV2RAY_PLUGIN_UI_TYPE, QWidget *> SimplePlugin::GetUIWidgets()
+const QWidget *SimplePlugin::GetUIWidgets(Qv2ray::QV2RAY_PLUGIN_UI_TYPE type)
 {
     emit PluginLog("Getting UI Widget.");
-    return {};
+    switch (type)
+    {
+        case Qv2ray::UI_TYPE_INBOUND_EDITOR:
+        case Qv2ray::UI_TYPE_OUTBOUND_EDITOR:
+        case Qv2ray::UI_TYPE_PREFERENCE_WINDOW:
+            pluginWidget->setText("Plugin widget opened at: " + QDateTime::currentDateTime().toString());
+            return pluginWidget;
+
+        case Qv2ray::UI_TYPE_GROUP_EDITOR: return nullptr;
+    }
+    return nullptr;
 }
 
-void SimplePlugin::PluginHook(QV2RAY_PLUGIN_HOOK_TYPE, QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant)
+void SimplePlugin::PluginHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant)
 {
     emit PluginLog("Processing Plugin Hook.");
 }
 
-QV2RAY_PLUGIN_HOOK_TYPE_FLAGS SimplePlugin::PluginHooks() const
+Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE_FLAGS SimplePlugin::PluginHooks() const
 {
     emit PluginLog("Getting Plugin Hook.");
-    return QV2RAY_PLUGIN_HOOK_TYPE::NONE;
+    // We want all events!
+    return { Qv2ray::HOOK_TYPE_NONE, Qv2ray::HOOK_TYPE_CONFIG_EVENTS, Qv2ray::HOOK_TYPE_CONFIG_STATE_EVENTS, Qv2ray::HOOK_TYPE_STATS_EVENTS };
 }
 
-QV2RAY_SPECIAL_PLUGIN_TYPE SimplePlugin::SpecialPluginType() const
+Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE SimplePlugin::SpecialPluginType() const
 {
     emit PluginLog("Getting Special Plugin Type.");
-    return QV2RAY_SPECIAL_PLUGIN_TYPE::SPECIAL_TYPE_NONE;
+    return Qv2ray::SPECIAL_TYPE_NONE;
 }

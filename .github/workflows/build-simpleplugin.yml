@@ -51,7 +51,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          toolset: 14.0
+          toolset: 14.2
           arch: ${{ matrix.arch }}
       - name: Cache Qt
         id: cache-qt

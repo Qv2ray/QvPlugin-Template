@@ -68,7 +68,7 @@ jobs:
           mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
 # ========================================================================================================= Generate MakeFile and Build
-      - name: macOS - ${{ steps.get_name.outputs.NAME }} - ${{ matrix.qt_version }} - Generate Dependencies and Build
+      - name: macOS - ${{ matrix.qt_version }} - Generate Dependencies and Build
         shell: bash
         if: matrix.platform == 'macos-latest'
         run: |
@@ -79,7 +79,7 @@ jobs:
           sudo cmake --install .
           sudo chmod -Rv a+rw ./
 # --------------------------------------------------------        
-      - name: Windows - ${{ steps.get_name.outputs.NAME }} - ${{ matrix.qt_version }} - Generate Dependencies and Build
+      - name: Windows - ${{ matrix.qt_version }} - Generate Dependencies and Build
         shell: bash
         if: matrix.platform == 'windows-latest'
         env:
@@ -91,7 +91,7 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . --parallel $(nproc)
 # --------------------------------------------------------
-      - name: Linux - ${{ steps.get_name.outputs.NAME }} - ${{ matrix.qt_version }} - Generate Dependencies and Build
+      - name: Linux - ${{ matrix.qt_version }} - Generate Dependencies and Build
         if: matrix.platform == 'ubuntu-16.04'
         shell: bash
         run: |
@@ -100,7 +100,7 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . --parallel $(nproc)
 # ========================================================================================================= Deployments
-      - name: Linux - ${{ steps.get_name.outputs.NAME }} - ${{ matrix.qt_version }} - Uploading artifact
+      - name: Linux - ${{ matrix.qt_version }} - Uploading artifact
         if: matrix.platform == 'ubuntu-16.04'
         uses: actions/upload-artifact@master
         with:
@@ -116,23 +116,23 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
 # --------------------------------------------------------
-      - name: macOS - ${{ steps.get_name.outputs.NAME }} - ${{ matrix.qt_version }} - Uploading Artifact
+      - name: macOS - ${{ matrix.qt_version }} - Uploading Artifact
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.macOS-${{ matrix.arch }}.qt${{ matrix.qt_version }}.dylib
-          path: build/lib${{ steps.get_name.outputs.NAME }}.dylib
+          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.macOS-${{ matrix.arch }}.qt${{ matrix.qt_version }}.so
+          path: build/lib${{ steps.get_name.outputs.NAME }}.so
       - name: macOS - ${{ matrix.qt_version }} - Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         if: github.event_name == 'release' && matrix.platform == 'macos-latest'
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/lib${{ steps.get_name.outputs.NAME }}.dylib
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.macOS-${{ matrix.arch }}.dylib
+          file: build/lib${{ steps.get_name.outputs.NAME }}.so
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.macOS-${{ matrix.arch }}.so
           tag: ${{ github.ref }}
           overwrite: true
 # --------------------------------------------------------
-      - name: Win-${{ matrix.arch }} - ${{ steps.get_name.outputs.NAME }} - ${{ matrix.qt_version }} - Uploading artifact
+      - name: Win-${{ matrix.arch }} - ${{ matrix.qt_version }} - Uploading artifact
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@master
         with:

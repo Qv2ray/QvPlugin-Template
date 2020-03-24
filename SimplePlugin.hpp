@@ -13,61 +13,27 @@ class SimplePlugin
     Q_PLUGIN_METADATA(IID Qv2rayInterface_IID)
     Q_OBJECT
   public:
-    QV2RAY_PLUGIN_HOOK_TYPE_FLAGS PluginHooks() const override
-    {
-        return QV2RAY_PLUGIN_HOOK_TYPE::NONE;
-    };
-    QV2RAY_SPECIAL_PLUGIN_TYPE SpecialPluginType() const override
-    {
-        return QV2RAY_SPECIAL_PLUGIN_TYPE::SPECIAL_TYPE_NONE;
-    }
+    QV2RAY_PLUGIN_HOOK_TYPE_FLAGS PluginHooks() const override;
+    QV2RAY_SPECIAL_PLUGIN_TYPE SpecialPluginType() const override;
     //
     // Basic metainfo of this plugin
     QString Name() const override;
-    QString InternalName() const override
-    {
-        return "sample_plugin";
-    }
+    QString InternalName() const override;
     QString Author() const override;
-    QString Description() const override
-    {
-        return "Sample plugin description";
-    }
+    QString Description() const override;
     //
-    QStringList OutboundTypes() const override
-    {
-        return {};
-    }
+    QStringList OutboundTypes() const override;
     //
-    const QMap<QV2RAY_PLUGIN_UI_TYPE, QWidget *> GetUIWidgets() override
-    {
-        return {};
-    }
-    QObject *GetQObject() override
-    {
-        return this;
-    }
-    Qv2rayKernelPlugin *GetKernelInstance() override
-    {
-        return nullptr;
-    }
+    const QMap<QV2RAY_PLUGIN_UI_TYPE, QWidget *> GetUIWidgets() override;
+    QObject *GetQObject() override;
+    Qv2rayKernelPlugin *GetKernelInstance() override;
     //
-    void InitializePlugin(const QJsonObject &) override
-    {
-    }
-    const QIcon Icon() const override
-    {
-        return QIcon(":/qv2ray.png");
-    }
-    const QJsonObject GetPluginSettngs() override
-    {
-        return {};
-    }
+    void InitializePlugin(const QJsonObject &) override;
+    const QIcon Icon() const override;
+    const QJsonObject GetPluginSettngs() override;
     //
     /// The hook function, for SPECIAL_TYPE_NONE
-    void PluginHook(QV2RAY_PLUGIN_HOOK_TYPE, QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant) override
-    {
-    }
+    void PluginHook(QV2RAY_PLUGIN_HOOK_TYPE, QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant) override;
   signals:
     void PluginLog(const QString &) const override;
 };

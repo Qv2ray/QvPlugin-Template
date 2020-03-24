@@ -51,7 +51,7 @@ jobs:
         if: matrix.platform == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          toolset: 14.1
+          toolset: 14.0
           arch: ${{ matrix.arch }}
       - name: Cache Qt
         id: cache-qt
@@ -134,13 +134,13 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.Windows-${{ matrix.arch }}.qt${{ matrix.qt_version }}.dll
-          path: build/lib${{ steps.get_name.outputs.NAME }}.dll
+          path: build/Release/${{ steps.get_name.outputs.NAME }}.dll
       - name: Win-${{ matrix.arch }} - ${{ matrix.qt_version }} - Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         if: github.event_name == 'release' && matrix.platform == 'windows-latest'
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/lib${{ steps.get_name.outputs.NAME }}.dll
+          file: build/Release/${{ steps.get_name.outputs.NAME }}.dll
           asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Windows-${{ matrix.arch }}.dll
           tag: ${{ github.ref }}
           overwrite: true

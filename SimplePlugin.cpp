@@ -93,7 +93,7 @@ Qv2ray::Qv2rayPluginEditorWidget *SimplePlugin::GetEditorWidget(Qv2ray::QV2RAY_P
     return nullptr;
 }
 
-void SimplePlugin::PluginHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE event, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE subtype, QVariant data)
+void SimplePlugin::ProcessHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE event, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE subtype, QVariant *data)
 {
     emit PluginLog("Processing Plugin Hook.");
     emit PluginLog("Data: " + EnumToString(event) + ", subtype: " + EnumToString(subtype));
@@ -103,14 +103,14 @@ Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE_FLAGS SimplePlugin::PluginHooks() const
 {
     emit PluginLog("Getting Plugin Hook.");
     // We want all events!
-    return { Qv2ray::HOOK_TYPE_NONE,                //
-             Qv2ray::HOOK_TYPE_CONFIG_EVENTS,       //
-             Qv2ray::HOOK_TYPE_CONFIG_STATE_EVENTS, //
+    return { Qv2ray::HOOK_TYPE_NONE,          //
+             Qv2ray::HOOK_TYPE_CONFIG_EVENTS, //
+             Qv2ray::HOOK_TYPE_STATE_EVENTS,  //
              Qv2ray::HOOK_TYPE_STATS_EVENTS };
 }
 
-Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE SimplePlugin::SpecialPluginType() const
+Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE_FLAGS SimplePlugin::SpecialPluginType() const
 {
     emit PluginLog("Getting Special Plugin Type.");
-    return Qv2ray::SPECIAL_TYPE_NONE;
+    return { Qv2ray::SPECIAL_TYPE_NONE };
 }

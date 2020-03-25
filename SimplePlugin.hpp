@@ -16,7 +16,7 @@ class SimplePlugin
     Q_OBJECT
   public:
     Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE_FLAGS PluginHooks() const override;
-    Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE SpecialPluginType() const override;
+    Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE_FLAGS SpecialPluginType() const override;
     //
     // Basic metainfo of this plugin
     QString Name() const override;
@@ -37,7 +37,7 @@ class SimplePlugin
     const QJsonObject GetPluginSettngs() override;
     //
     /// The hook function, for SPECIAL_TYPE_NONE
-    void PluginHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant) override;
+    void ProcessHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant *) override;
   signals:
     void PluginLog(const QString &) const override;
 

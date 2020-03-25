@@ -18,7 +18,6 @@ QString SimplePlugin::Name() const
 
 QString SimplePlugin::Author() const
 {
-    emit PluginLog("Test log");
     return "Example Author";
 }
 
@@ -44,10 +43,18 @@ Qv2ray::Qv2rayKernelPluginObject *SimplePlugin::GetKernelInstance()
     return nullptr;
 }
 
-void SimplePlugin::InitializePlugin(const QJsonObject &)
+bool SimplePlugin::UpdatePluginSettings(const QJsonObject &conf)
+{
+    settings = conf;
+    return true;
+}
+
+bool SimplePlugin::InitializePlugin(const QJsonObject &settings)
 {
     emit PluginLog("Initialize plugin.");
+    this->settings = settings;
     pluginWidget = new QLabel;
+    return true;
 }
 
 const QIcon SimplePlugin::Icon() const
@@ -59,7 +66,7 @@ const QIcon SimplePlugin::Icon() const
 const QJsonObject SimplePlugin::GetPluginSettngs()
 {
     emit PluginLog("Getting plugin settings.");
-    return {};
+    return settings;
 }
 
 QObject *SimplePlugin::GetQObject()
@@ -70,7 +77,7 @@ QObject *SimplePlugin::GetQObject()
 
 QWidget *SimplePlugin::GetSettingsWidget()
 {
-    pluginWidget->setText("Plugin widget opened at: " + QDateTime::currentDateTime().toString());
+    pluginWidget->setText("From Settings: " + settings["msg"].toString());
     return pluginWidget;
 }
 

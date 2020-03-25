@@ -31,7 +31,8 @@ class SimplePlugin
     QObject *GetQObject() override;
     Qv2ray::Qv2rayKernelPluginObject *GetKernelInstance() override;
     //
-    void InitializePlugin(const QJsonObject &) override;
+    bool UpdatePluginSettings(const QJsonObject &) override;
+    bool InitializePlugin(const QJsonObject &) override;
     const QIcon Icon() const override;
     const QJsonObject GetPluginSettngs() override;
     //
@@ -41,5 +42,6 @@ class SimplePlugin
     void PluginLog(const QString &) const override;
 
   private:
+    QJsonObject settings;
     QLabel *pluginWidget;
 };

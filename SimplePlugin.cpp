@@ -2,6 +2,14 @@
 
 #include <QDateTime>
 #include <QLabel>
+#include <QMetaEnum>
+
+// Helper template function to convert an enum to QString.
+template<typename T>
+QString EnumToString(const T &t)
+{
+    return QMetaEnum::fromType<T>().key(t);
+}
 
 QString SimplePlugin::Name() const
 {
@@ -30,7 +38,7 @@ QStringList SimplePlugin::OutboundTypes() const
     return {};
 }
 
-Qv2ray::Qv2rayKernelPlugin *SimplePlugin::GetKernelInstance()
+Qv2ray::Qv2rayKernelPluginObject *SimplePlugin::GetKernelInstance()
 {
     emit PluginLog("Getting kernel instance.");
     return nullptr;
@@ -60,32 +68,38 @@ QObject *SimplePlugin::GetQObject()
     return this;
 }
 
-const QWidget *SimplePlugin::GetUIWidgets(Qv2ray::QV2RAY_PLUGIN_UI_TYPE type)
+QWidget *SimplePlugin::GetSettingsWidget()
+{
+    pluginWidget->setText("Plugin widget opened at: " + QDateTime::currentDateTime().toString());
+    return pluginWidget;
+}
+
+Qv2ray::Qv2rayPluginEditorWidget *SimplePlugin::GetEditorWidget(Qv2ray::QV2RAY_PLUGIN_UI_TYPE type)
 {
     emit PluginLog("Getting UI Widget.");
     switch (type)
     {
         case Qv2ray::UI_TYPE_INBOUND_EDITOR:
         case Qv2ray::UI_TYPE_OUTBOUND_EDITOR:
-        case Qv2ray::UI_TYPE_PREFERENCE_WINDOW:
-            pluginWidget->setText("Plugin widget opened at: " + QDateTime::currentDateTime().toString());
-            return pluginWidget;
-
-        case Qv2ray::UI_TYPE_GROUP_EDITOR: return nullptr;
+        case Qv2ray::UI_TYPE_GROUP_EDITOR: break;
     }
     return nullptr;
 }
 
-void SimplePlugin::PluginHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant)
+void SimplePlugin::PluginHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE event, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE subtype, QVariant data)
 {
     emit PluginLog("Processing Plugin Hook.");
+    emit PluginLog("Data: " + EnumToString(event) + ", subtype: " + EnumToString(subtype));
 }
 
 Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE_FLAGS SimplePlugin::PluginHooks() const
 {
     emit PluginLog("Getting Plugin Hook.");
     // We want all events!
-    return { Qv2ray::HOOK_TYPE_NONE, Qv2ray::HOOK_TYPE_CONFIG_EVENTS, Qv2ray::HOOK_TYPE_CONFIG_STATE_EVENTS, Qv2ray::HOOK_TYPE_STATS_EVENTS };
+    return { Qv2ray::HOOK_TYPE_NONE,                //
+             Qv2ray::HOOK_TYPE_CONFIG_EVENTS,       //
+             Qv2ray::HOOK_TYPE_CONFIG_STATE_EVENTS, //
+             Qv2ray::HOOK_TYPE_STATS_EVENTS };
 }
 
 Qv2ray::QV2RAY_SPECIAL_PLUGIN_TYPE SimplePlugin::SpecialPluginType() const

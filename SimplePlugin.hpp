@@ -26,9 +26,10 @@ class SimplePlugin
     //
     QStringList OutboundTypes() const override;
     //
-    const QWidget *GetUIWidgets(Qv2ray::QV2RAY_PLUGIN_UI_TYPE) override;
+    QWidget *GetSettingsWidget() override;
+    Qv2ray::Qv2rayPluginEditorWidget *GetEditorWidget(Qv2ray::QV2RAY_PLUGIN_UI_TYPE) override;
     QObject *GetQObject() override;
-    Qv2ray::Qv2rayKernelPlugin *GetKernelInstance() override;
+    Qv2ray::Qv2rayKernelPluginObject *GetKernelInstance() override;
     //
     void InitializePlugin(const QJsonObject &) override;
     const QIcon Icon() const override;

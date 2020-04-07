@@ -69,6 +69,11 @@ const QJsonObject SimplePlugin::GetPluginSettngs()
     return settings;
 }
 
+Qv2rayPluginProcessor *SimplePlugin::PluginProcessor()
+{
+    return nullptr;
+}
+
 QObject *SimplePlugin::GetQObject()
 {
     emit PluginLog("Getting qobject.");

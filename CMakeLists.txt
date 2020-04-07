@@ -1,33 +1,29 @@
 project(QvSimplePlugin)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.1.0)
+
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_INCLUDE_CURRENT_DIR ON )
-set(CMAKE_AUTOMOC ON )
 
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
+if(CMAKE_VERSION VERSION_LESS "3.7.0")
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+endif()
 
-set(QvSimplePlugin_HDRS
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+
+set(QVPLUGIN_INTERFACE_INCLUDE_DIR "interface/")
+include(interface/QvPluginInterface.cmake)
+include_directories(${QVPLUGIN_INTERFACE_INCLUDE_DIR})
+
+add_library(${PROJECT_NAME} MODULE
     SimplePlugin.hpp
-    interface/QvPluginInterface.hpp
-    )
-
-set(QvSimplePlugin_SRCS
     SimplePlugin.cpp
-)
-
-set(QvSimplePlugin_RSCS
     resx.qrc
-    )
+    ${QVPLUGIN_INTERFACE_HEADERS})
 
-QT5_ADD_RESOURCES(RSCS ${QvSimplePlugin_RSCS})
-
-set ( QvSimplePlugin_MOCS
-	SimplePlugin.hpp
-	interface/QvPluginInterface.hpp
-	)
-QT5_WRAP_CPP(MOCS ${QvSimplePlugin_MOCS})
-
-add_library(QvSimplePlugin MODULE ${QvSimplePlugin_SRCS} ${UIS} ${RSCS} ${TRS} ${MOCS})
-target_link_libraries(QvSimplePlugin  Qt5::Core Qt5::Gui Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME}
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Widgets)

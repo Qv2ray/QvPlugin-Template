@@ -1,4 +1,4 @@
-name: QvPlugin Build Action - cmake
+name: QvPlugin Build Action - qmake
 
 on: 
   push:
@@ -70,34 +70,21 @@ jobs:
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
 # ========================================================================================================= Generate MakeFile and Build
       - name: Windows - ${{ matrix.qt_version }} - Generate Dependencies and Build
-        shell: bash
         if: matrix.platform == 'windows-latest'
-        env:
-          CC: cl.exe
-          CXX: cl.exe
         run: |
           mkdir build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.cmakearch }}
-          cmake --build . --parallel $(nproc) --config Release
+          qmake ..
+          nmake
 # --------------------------------------------------------
-      - name: macOS - ${{ matrix.qt_version }} - Generate Dependencies and Build
+      - name: Unix - ${{ matrix.qt_version }} - Generate Dependencies and Build
         shell: bash
-        if: matrix.platform == 'macos-latest'
+        if: matrix.platform != 'windows-latest'
         run: |
           mkdir build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
-          cmake --build . --parallel $(sysctl -n hw.logicalcpu)
-# --------------------------------------------------------
-      - name: Linux - ${{ matrix.qt_version }} - Generate Dependencies and Build
-        if: matrix.platform == 'ubuntu-16.04'
-        shell: bash
-        run: |
-          mkdir build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
-          cmake --build . --parallel $(nproc)
+          qmake ..
+          make
 # ========================================================================================================= Deployments
       - name: Win-${{ matrix.arch }} - ${{ matrix.qt_version }} - Uploading artifact
         if: matrix.platform == 'windows-latest'

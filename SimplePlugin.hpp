@@ -1,6 +1,8 @@
 #pragma once
 
 #include "QvPluginInterface.hpp"
+#include "SimplePluginEventHandler.hpp"
+#include "SimplePluginKernel.hpp"
 
 #include <QObject>
 #include <QtPlugin>
@@ -16,31 +18,34 @@ class SimplePlugin
     Q_PLUGIN_METADATA(IID Qv2rayInterface_IID)
     Q_OBJECT
   public:
-    QV2RAY_PLUGIN_PROCESSTYPE_FLAGS PluginHooks() const override;
-    QV2RAY_SPECIAL_PLUGIN_TYPE_FLAGS SpecialPluginType() const override;
     //
     // Basic metainfo of this plugin
-    QString Name() const override;
-    QString InternalName() const override;
-    QString Author() const override;
-    QString Description() const override;
-    //
-    QStringList OutboundTypes() const override;
+    const QvPluginMetadata GetMetadata() const override
+    {
+        return QvPluginMetadata{
+            "Example Plugin",                                 //
+            "Example Author",                                 //
+            "qvplugin_test",                                  //
+            "QvSimplePlugin is a simple plugin for testing.", //
+            QIcon(":/qv2ray.png"),                            //
+            { CAPABILITY_CONNECTION_ENTRY,                    //
+              CAPABILITY_CONNECTIVITY,                        //
+              CAPABILITY_STATS,                               //
+              CAPABILITY_SYSTEM_PROXY },                      //
+            { SPECIAL_TYPE_KERNEL,                            //
+              SPECIAL_TYPE_SERIALIZOR }                       //
+        };
+    }
     //
     QWidget *GetSettingsWidget() override;
-    Qv2rayPluginEditorWidget *GetEditorWidget(QV2RAY_PLUGIN_UI_TYPE) override;
-    QObject *GetQObject() override;
-    Qv2rayKernelPluginObject *GetKernelInstance() override;
+    QvPluginEditor *GetEditorWidget(UI_TYPE) override;
+    QvPluginKernel *GetKernel() override;
     //
-    bool UpdatePluginSettings(const QJsonObject &) override;
-    bool InitializePlugin(const QString &, const QJsonObject &) override;
-    const QIcon Icon() const override;
-    const QJsonObject GetPluginSettngs() override;
+    bool UpdateSettings(const QJsonObject &) override;
+    bool Initialize(const QString &, const QJsonObject &) override;
+    const QJsonObject GetSettngs() override;
     //
-    Qv2rayPluginProcessor *PluginProcessor() override;
-    //
-    /// The hook function, for SPECIAL_TYPE_NONE
-    // void ProcessHook(Qv2ray::QV2RAY_PLUGIN_HOOK_TYPE, Qv2ray::QV2RAY_PLUGIN_HOOK_SUBTYPE, QVariant *) override;
+    QvPluginEventHandler *GetEventHandler() override;
   signals:
     void PluginLog(const QString &) const override;
     void PluginErrorMessageBox(const QString &) const override;
@@ -48,4 +53,6 @@ class SimplePlugin
   private:
     QJsonObject settings;
     QLabel *pluginWidget;
+    SimplePluginEventHandler *eventHandler;
+    SimplePluginKernel *kernel;
 };

@@ -12,5 +12,5 @@ class SimplePluginKernel : public Qv2rayPlugin::QvPluginKernel
     bool StartKernel() override;
     bool StopKernel() override;
     /// Key = DisplayName, Value = protocol.
-    const QList<Qv2rayPlugin::QvPluginOutboundObject> KernelOutboundCapabilities() const override;
+    const QList<Qv2rayPlugin::QvPluginOutboundProtocolObject> KernelOutboundCapabilities() const override;
 };

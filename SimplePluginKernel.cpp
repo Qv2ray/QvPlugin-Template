@@ -12,7 +12,7 @@ bool SimplePluginKernel::StopKernel()
     emit OnKernelCrashed("Yay!");
     return true;
 }
-const QList<Qv2rayPlugin::QvPluginOutboundObject> SimplePluginKernel::KernelOutboundCapabilities() const
+const QList<Qv2rayPlugin::QvPluginOutboundProtocolObject> SimplePluginKernel::KernelOutboundCapabilities() const
 {
     return { { "Fake outbound", "pseudo" } };
 }

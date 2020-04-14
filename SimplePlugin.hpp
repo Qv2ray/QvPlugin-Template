@@ -23,8 +23,8 @@ class SimplePlugin
     const QvPluginMetadata GetMetadata() const override
     {
         return QvPluginMetadata{
-            "Example Plugin",                                 //
-            "Example Author",                                 //
+            "QvSimplePlugin",                                 //
+            "Qv2ray Workgroup",                               //
             "qvplugin_test",                                  //
             "QvSimplePlugin is a simple plugin for testing.", //
             QIcon(":/qv2ray.png"),                            //
@@ -36,23 +36,23 @@ class SimplePlugin
               SPECIAL_TYPE_SERIALIZOR }                       //
         };
     }
-    //
-    QWidget *GetSettingsWidget() override;
-    QvPluginEditor *GetEditorWidget(UI_TYPE) override;
-    QvPluginKernel *GetKernel() override;
+
+    std::shared_ptr<QvPluginKernel> GetKernel() override;
+    std::shared_ptr<QvPluginSerializer> GetSerializer() override;
+    std::shared_ptr<QvPluginEventHandler> GetEventHandler() override;
+    std::unique_ptr<QvPluginEditor> GetEditorWidget(UI_TYPE) override;
+    std::unique_ptr<QWidget> GetSettingsWidget() override;
     //
     bool UpdateSettings(const QJsonObject &) override;
     bool Initialize(const QString &, const QJsonObject &) override;
     const QJsonObject GetSettngs() override;
     //
-    QvPluginEventHandler *GetEventHandler() override;
   signals:
     void PluginLog(const QString &) const override;
     void PluginErrorMessageBox(const QString &) const override;
 
   private:
     QJsonObject settings;
-    QLabel *pluginWidget;
-    SimplePluginEventHandler *eventHandler;
-    SimplePluginKernel *kernel;
+    std::shared_ptr<QvPluginEventHandler> eventHandler;
+    std::shared_ptr<QvPluginKernel> kernel;
 };

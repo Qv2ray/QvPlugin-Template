@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <QMetaEnum>
 
-QvPluginKernel *SimplePlugin::GetKernel()
+std::shared_ptr<QvPluginKernel> SimplePlugin::GetKernel()
 {
     return kernel;
 }
@@ -19,9 +19,8 @@ bool SimplePlugin::Initialize(const QString &, const QJsonObject &settings)
 {
     emit PluginLog("Initialize plugin.");
     this->settings = settings;
-    pluginWidget = new QLabel;
-    eventHandler = new SimplePluginEventHandler(this);
-    kernel = new SimplePluginKernel(this);
+    eventHandler = std::make_shared<SimplePluginEventHandler>(this);
+    kernel = std::make_shared<SimplePluginKernel>(this);
     return true;
 }
 
@@ -31,18 +30,17 @@ const QJsonObject SimplePlugin::GetSettngs()
     return settings;
 }
 
-QvPluginEventHandler *SimplePlugin::GetEventHandler()
+std::shared_ptr<QvPluginEventHandler> SimplePlugin::GetEventHandler()
 {
     return eventHandler;
 }
 
-QWidget *SimplePlugin::GetSettingsWidget()
+std::unique_ptr<QWidget> SimplePlugin::GetSettingsWidget()
 {
-    pluginWidget->setText("From Settings: " + settings["msg"].toString());
-    return pluginWidget;
+    return std::make_unique<QLabel>("Text!");
 }
 
-QvPluginEditor *SimplePlugin::GetEditorWidget(UI_TYPE type)
+std::unique_ptr<QvPluginEditor> SimplePlugin::GetEditorWidget(UI_TYPE type)
 {
     switch (type)
     {

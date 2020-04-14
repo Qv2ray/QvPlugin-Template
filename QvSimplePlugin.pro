@@ -1,5 +1,5 @@
 QT += core gui widgets
-CONFIG += qt c++11 plugin
+CONFIG += qt c++14 plugin
 
 TEMPLATE = lib
 

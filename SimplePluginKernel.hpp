@@ -1,11 +1,16 @@
 #pragma once
-#include "Qv2rayPluginObjects.hpp"
+#include "QvPluginProcessor.hpp"
 
 class SimplePluginKernel : public Qv2rayPlugin::QvPluginKernel
 {
   public:
     explicit SimplePluginKernel(QObject *parent = nullptr);
-    bool StartKernel(const QJsonObject config) override;
+    //
+
+    /// Kernel related operations
+    void SetConnectionSettings(const QString &listenAddress, const QMap<QString, int> &inbound, const QJsonObject &settings) override;
+    bool StartKernel() override;
     bool StopKernel() override;
-    const QMap<QString, QString> GetKernelOutbounds() const override;
+    /// Key = DisplayName, Value = protocol.
+    const QList<Qv2rayPlugin::QvPluginOutboundObject> KernelOutboundCapabilities() const override;
 };

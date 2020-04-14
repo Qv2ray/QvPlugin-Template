@@ -3,7 +3,7 @@
 SimplePluginKernel::SimplePluginKernel(QObject *parent) : Qv2rayPlugin::QvPluginKernel(parent)
 {
 }
-bool SimplePluginKernel::StartKernel(const QJsonObject)
+bool SimplePluginKernel::StartKernel()
 {
     return true;
 }
@@ -12,7 +12,7 @@ bool SimplePluginKernel::StopKernel()
     emit OnKernelCrashed("Yay!");
     return true;
 }
-const QMap<QString, QString> SimplePluginKernel::GetKernelOutbounds() const
+const QList<Qv2rayPlugin::QvPluginOutboundObject> SimplePluginKernel::KernelOutboundCapabilities() const
 {
     return { { "Fake outbound", "pseudo" } };
 }

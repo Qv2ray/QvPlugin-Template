@@ -23,6 +23,8 @@ add_library(${PROJECT_NAME} MODULE
     SimplePlugin.cpp
     core/EventHandler.cpp
     core/EventHandler.hpp
+    core/Serializer.cpp
+    core/Serializer.hpp
     core/Kernel.cpp
     core/Kernel.hpp
     resx.qrc

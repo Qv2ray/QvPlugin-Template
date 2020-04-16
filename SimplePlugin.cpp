@@ -50,3 +50,8 @@ std::unique_ptr<QvPluginEditor> SimplePlugin::GetEditorWidget(UI_TYPE type)
     }
     return nullptr;
 }
+
+std::shared_ptr<QvPluginSerializer> SimplePlugin::GetSerializer()
+{
+    return nullptr;
+}

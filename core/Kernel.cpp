@@ -1,24 +1,24 @@
 #include "Kernel.hpp"
 
-SimplePluginKernel::SimplePluginKernel(QObject *parent) : Qv2rayPlugin::QvPluginKernel(parent)
+SimpleKernel::SimpleKernel(QObject *parent) : Qv2rayPlugin::QvPluginKernel(parent)
 {
 }
-bool SimplePluginKernel::StartKernel()
+bool SimpleKernel::StartKernel()
 {
     return true;
 }
-void SimplePluginKernel::SetConnectionSettings(const QString &listenAddress, const QMap<QString, int> &inbound, const QJsonObject &settings)
+void SimpleKernel::SetConnectionSettings(const QString &listenAddress, const QMap<QString, int> &inbound, const QJsonObject &settings)
 {
     Q_UNUSED(inbound)
     Q_UNUSED(settings)
     Q_UNUSED(listenAddress)
 }
-bool SimplePluginKernel::StopKernel()
+bool SimpleKernel::StopKernel()
 {
     emit OnKernelCrashed("Yay!");
     return true;
 }
-const QList<Qv2rayPlugin::QvPluginOutboundProtocolObject> SimplePluginKernel::KernelOutboundCapabilities() const
+const QList<Qv2rayPlugin::QvPluginOutboundProtocolObject> SimpleKernel::KernelOutboundCapabilities() const
 {
     return { { "Fake outbound", "pseudo" } };
 }

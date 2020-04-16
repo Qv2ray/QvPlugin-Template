@@ -3,6 +3,7 @@
 #include "QvPluginInterface.hpp"
 #include "core/EventHandler.hpp"
 #include "core/Kernel.hpp"
+#include "core/Serializer.hpp"
 
 #include <QObject>
 #include <QtPlugin>
@@ -53,6 +54,7 @@ class SimplePlugin
 
   private:
     QJsonObject settings;
+    std::shared_ptr<QvPluginSerializer> serializer;
     std::shared_ptr<QvPluginEventHandler> eventHandler;
     std::shared_ptr<QvPluginKernel> kernel;
 };

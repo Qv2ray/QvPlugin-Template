@@ -1,23 +1,23 @@
 #include "EventHandler.hpp"
 
 using namespace Qv2rayPlugin;
-SimplePluginEventHandler::SimplePluginEventHandler(QObject *parent) : Qv2rayPlugin::QvPluginEventHandler(parent)
+SimpleEventHandler::SimpleEventHandler(QObject *parent) : Qv2rayPlugin::QvPluginEventHandler(parent)
 {
 }
 
-QvPlugin_EventHandler(SimplePluginEventHandler, Connectivity)
+QvPlugin_EventHandler(SimpleEventHandler, Connectivity)
 {
     Q_UNUSED(pluginEvent);
 }
-QvPlugin_EventHandler(SimplePluginEventHandler, SystemProxy)
+QvPlugin_EventHandler(SimpleEventHandler, SystemProxy)
 {
     Q_UNUSED(pluginEvent);
 }
-QvPlugin_EventHandler(SimplePluginEventHandler, ConnectionEntry)
+QvPlugin_EventHandler(SimpleEventHandler, ConnectionEntry)
 {
     Q_UNUSED(pluginEvent);
 }
-QvPlugin_EventHandler(SimplePluginEventHandler, ConnectionStats)
+QvPlugin_EventHandler(SimpleEventHandler, ConnectionStats)
 {
     Q_UNUSED(pluginEvent);
 }

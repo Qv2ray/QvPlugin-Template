@@ -19,14 +19,14 @@ bool SimplePlugin::Initialize(const QString &, const QJsonObject &settings)
 {
     emit PluginLog("Initialize plugin.");
     this->settings = settings;
-    eventHandler = std::make_shared<SimplePluginEventHandler>(this);
-    kernel = std::make_shared<SimplePluginKernel>(this);
+    serializer = std::make_shared<SimpleSerializer>(this);
+    eventHandler = std::make_shared<SimpleEventHandler>(this);
+    kernel = std::make_shared<SimpleKernel>(this);
     return true;
 }
 
 const QJsonObject SimplePlugin::GetSettngs()
 {
-    emit PluginLog("Getting plugin settings.");
     return settings;
 }
 
@@ -53,5 +53,5 @@ std::unique_ptr<QvPluginEditor> SimplePlugin::GetEditorWidget(UI_TYPE type)
 
 std::shared_ptr<QvPluginSerializer> SimplePlugin::GetSerializer()
 {
-    return nullptr;
+    return serializer;
 }

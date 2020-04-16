@@ -1,8 +1,8 @@
 #pragma once
 
 #include "QvPluginInterface.hpp"
-#include "SimplePluginEventHandler.hpp"
-#include "SimplePluginKernel.hpp"
+#include "core/EventHandler.hpp"
+#include "core/Kernel.hpp"
 
 #include <QObject>
 #include <QtPlugin>
@@ -36,7 +36,7 @@ class SimplePlugin
               SPECIAL_TYPE_SERIALIZOR }                       //
         };
     }
-
+    //
     std::shared_ptr<QvPluginKernel> GetKernel() override;
     std::shared_ptr<QvPluginSerializer> GetSerializer() override;
     std::shared_ptr<QvPluginEventHandler> GetEventHandler() override;

@@ -21,10 +21,10 @@ include_directories(${QVPLUGIN_INTERFACE_INCLUDE_DIR})
 add_library(${PROJECT_NAME} MODULE
     SimplePlugin.hpp
     SimplePlugin.cpp
-    SimplePluginEventHandler.cpp
-    SimplePluginEventHandler.hpp
-    SimplePluginKernel.cpp
-    SimplePluginKernel.hpp
+    core/EventHandler.cpp
+    core/EventHandler.hpp
+    core/Kernel.cpp
+    core/Kernel.hpp
     resx.qrc
     ${QVPLUGIN_INTERFACE_HEADERS})
 

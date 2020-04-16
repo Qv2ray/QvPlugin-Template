@@ -5,6 +5,6 @@ TEMPLATE = lib
 
 include(interface/QvPluginInterface.pri)
 
-SOURCES += SimplePlugin.cpp SimplePluginKernel.cpp SimplePluginEventHandler.cpp
-HEADERS += SimplePlugin.hpp SimplePluginKernel.hpp SimplePluginEventHandler.hpp
+SOURCES += SimplePlugin.cpp core/Kernel.cpp core/EventHandler.cpp
+HEADERS += SimplePlugin.hpp core/Kernel.hpp core/EventHandler.hpp
 RESOURCES += resx.qrc

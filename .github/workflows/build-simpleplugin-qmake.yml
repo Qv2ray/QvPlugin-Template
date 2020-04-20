@@ -83,7 +83,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          qmake ..
+          qmake .. QMAKE_CXXFLAGS+=-fno-sized-deallocation
           make
 # ========================================================================================================= Deployments
       - name: Win-${{ matrix.arch }} - ${{ matrix.qt_version }} - Uploading artifact

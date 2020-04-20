@@ -93,6 +93,8 @@ jobs:
       - name: Linux - ${{ matrix.qt_version }} - Generate Dependencies and Build
         if: matrix.platform == 'ubuntu-16.04'
         shell: bash
+        env:
+          CXXFLAGS: -fno-sized-deallocation
         run: |
           mkdir build
           cd build

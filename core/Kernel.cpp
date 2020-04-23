@@ -15,7 +15,6 @@ void SimpleKernel::SetConnectionSettings(const QString &listenAddress, const QMa
 }
 bool SimpleKernel::StopKernel()
 {
-    emit OnKernelCrashed("Yay!");
     return true;
 }
 const QList<Qv2rayPlugin::QvPluginOutboundProtocolObject> SimpleKernel::KernelOutboundCapabilities() const

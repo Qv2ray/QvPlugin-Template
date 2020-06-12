@@ -23,7 +23,7 @@ class SimplePlugin
     // Basic metainfo of this plugin
     const QvPluginMetadata GetMetadata() const override
     {
-        return QvPluginMetadata{
+        QvPluginMetadata x{
             "QvSimplePlugin",                                 //
             "Qv2ray Workgroup",                               //
             "qvplugin_test",                                  //
@@ -36,9 +36,11 @@ class SimplePlugin
             { SPECIAL_TYPE_KERNEL,                            //
               SPECIAL_TYPE_SERIALIZOR }                       //
         };
+        x.KernelOutboundCapabilities = { { "Fake outbound", "pseudo" } };
+        return x;
     }
     //
-    std::shared_ptr<QvPluginKernel> GetKernel() override;
+    std::unique_ptr<QvPluginKernel> CreateKernel() override;
     std::shared_ptr<QvPluginSerializer> GetSerializer() override;
     std::shared_ptr<QvPluginEventHandler> GetEventHandler() override;
     std::unique_ptr<QvPluginEditor> GetEditorWidget(UI_TYPE) override;
@@ -56,5 +58,4 @@ class SimplePlugin
     QJsonObject settings;
     std::shared_ptr<QvPluginSerializer> serializer;
     std::shared_ptr<QvPluginEventHandler> eventHandler;
-    std::shared_ptr<QvPluginKernel> kernel;
 };

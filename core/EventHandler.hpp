@@ -1,7 +1,8 @@
 #pragma once
+#include "QvPluginInterfaceModels.hpp"
 #include "QvPluginProcessor.hpp"
 
-class SimpleEventHandler : public Qv2rayPlugin::QvPluginEventHandler
+class SimpleEventHandler : public Qv2rayPlugin::PluginEventHandler
 {
   public:
     SimpleEventHandler(QObject *parent = nullptr);

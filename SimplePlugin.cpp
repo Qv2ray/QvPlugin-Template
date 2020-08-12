@@ -4,53 +4,18 @@
 #include <QLabel>
 #include <QMetaEnum>
 
-std::unique_ptr<QvPluginKernel> SimplePlugin::CreateKernel()
-{
-    return std::make_unique<SimpleKernel>();
-}
+SimplePlugin plugin;
+SimpleKernel kernel;
+SimpleSerializer serializer;
+SimpleEventHandler eventHandler;
+SimpleGUIInterface guiInterface;
 
-bool SimplePlugin::UpdateSettings(const QJsonObject &conf)
-{
-    settings = conf;
-    return true;
-}
-
-bool SimplePlugin::Initialize(const QString &, const QJsonObject &settings)
+bool SimplePlugin::InitializePlugin(const QString &, const QJsonObject &)
 {
     emit PluginLog("Initialize plugin.");
     this->settings = settings;
-    serializer = std::make_shared<SimpleSerializer>(this);
+    outboundHandler = std::make_shared<SimpleSerializer>(this);
     eventHandler = std::make_shared<SimpleEventHandler>(this);
+    guiInterface = new SimpleGUIInterface();
     return true;
-}
-
-const QJsonObject SimplePlugin::GetSettngs()
-{
-    return settings;
-}
-
-std::shared_ptr<QvPluginEventHandler> SimplePlugin::GetEventHandler()
-{
-    return eventHandler;
-}
-
-std::unique_ptr<QWidget> SimplePlugin::GetSettingsWidget()
-{
-    return std::make_unique<QLabel>("Text!");
-}
-
-std::unique_ptr<QvPluginEditor> SimplePlugin::GetEditorWidget(UI_TYPE type)
-{
-    switch (type)
-    {
-        case UI_TYPE_INBOUND_EDITOR:
-        case UI_TYPE_OUTBOUND_EDITOR:
-        case UI_TYPE_GROUP_EDITOR: break;
-    }
-    return nullptr;
-}
-
-std::shared_ptr<QvPluginSerializer> SimplePlugin::GetSerializer()
-{
-    return serializer;
 }

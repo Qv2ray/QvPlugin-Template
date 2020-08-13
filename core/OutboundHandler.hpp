@@ -5,9 +5,8 @@
 
 class SimpleSerializer : public Qv2rayPlugin::PluginOutboundHandler
 {
-    Q_OBJECT
   public:
-    explicit SimpleSerializer(QObject *parent = nullptr) : Qv2rayPlugin::PluginOutboundHandler(parent){};
+    explicit SimpleSerializer() : Qv2rayPlugin::PluginOutboundHandler(){};
     const QString SerializeOutbound(const QString &protocol,  //
                                     const QString &alias,     //
                                     const QString &groupName, //

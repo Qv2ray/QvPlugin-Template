@@ -1,6 +1,6 @@
 #include "Kernel.hpp"
 
-SimpleKernel::SimpleKernel(QObject *parent) : Qv2rayPlugin::PluginKernel(parent)
+SimpleKernel::SimpleKernel() : Qv2rayPlugin::PluginKernel()
 {
 }
 bool SimpleKernel::StartKernel()

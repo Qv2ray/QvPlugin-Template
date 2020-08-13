@@ -1,7 +1,7 @@
 #include "EventHandler.hpp"
 
 using namespace Qv2rayPlugin;
-SimpleEventHandler::SimpleEventHandler(QObject *parent) : Qv2rayPlugin::PluginEventHandler(parent)
+SimpleEventHandler::SimpleEventHandler() : Qv2rayPlugin::PluginEventHandler()
 {
 }
 

@@ -16,6 +16,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 set(QVPLUGIN_INTERFACE_INCLUDE_DIR "interface/")
 include(interface/QvPluginInterface.cmake)
+include(interface/QvGUIPluginInterface.cmake)
 include_directories(${QVPLUGIN_INTERFACE_INCLUDE_DIR})
 
 add_library(${PROJECT_NAME} MODULE
@@ -23,12 +24,28 @@ add_library(${PROJECT_NAME} MODULE
     SimplePlugin.cpp
     core/EventHandler.cpp
     core/EventHandler.hpp
-    core/Serializer.cpp
-    core/Serializer.hpp
+    core/OutboundHandler.cpp
+    core/OutboundHandler.hpp
+    core/SubscriptionAdapter.cpp
+    core/SubscriptionAdapter.hpp
     core/Kernel.cpp
     core/Kernel.hpp
+    ui/Interface.hpp
+    ui/PluginOutboundEditor.cpp
+    ui/PluginOutboundEditor.hpp
+    ui/PluginOutboundEditor.ui
+    ui/PluginInboundEditor.cpp
+    ui/PluginInboundEditor.hpp
+    ui/PluginInboundEditor.ui
+    ui/PluginMainWindowWidget.cpp
+    ui/PluginMainWindowWidget.hpp
+    ui/PluginMainWindowWidget.ui
+    ui/PluginSettingsWidget.cpp
+    ui/PluginSettingsWidget.hpp
+    ui/PluginSettingsWidget.ui
     resx.qrc
-    ${QVPLUGIN_INTERFACE_HEADERS})
+    ${QVPLUGIN_INTERFACE_HEADERS}
+    ${QVGUIPLUGIN_INTERFACE_HEADERS})
 
 target_link_libraries(${PROJECT_NAME}
     Qt5::Core

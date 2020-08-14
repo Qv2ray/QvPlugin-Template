@@ -20,18 +20,18 @@ class SimplePlugin
     // Basic metainfo of this plugin
     const QvPluginMetadata GetMetadata() const override
     {
-        return { "QvSimplePlugin",                                 //
+        return { "Qv2ray Demo Plugin",                             //
                  "Qv2ray Workgroup",                               //
                  "qvplugin_test",                                  //
                  "QvSimplePlugin is a simple plugin for testing.", //
                  "v0.8.9",                                         //
                  "Qv2ray/QvPlugin-Template",                       //
                  {
-                     COMPONENT_OUTBOUND_HANDLER, //
-                     COMPONENT_KERNEL,           //
-                     COMPONENT_EVENT_HANDLER,    //
-                     COMPONENT_OUTBOUND_HANDLER,
-                     COMPONENT_SUBSCRIPTION_ADAPTER,
+                     COMPONENT_OUTBOUND_HANDLER,     //
+                     COMPONENT_KERNEL,               //
+                     COMPONENT_EVENT_HANDLER,        //
+                     COMPONENT_SUBSCRIPTION_ADAPTER, //
+                     COMPONENT_GUI                   //
                  },
                  UPDATE_GITHUB_RELEASE };
     }

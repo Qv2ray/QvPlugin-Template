@@ -32,8 +32,12 @@ class SimpleSerializer : public Qv2rayPlugin::PluginOutboundHandler
         object[Qv2rayPlugin::INFO_PROTOCOL] = protocol;
         return object;
     }
-    const QMap<QString, QString> SupportedProtocols() const override
+    const QList<QString> SupportedProtocols() const override
     {
-        return { { "fake_protocol", "fake-protocol://" } };
+        return { "fake_protocol" };
+    }
+    const QList<QString> SupportedLinkPrefixes() const override
+    {
+        return { "fake-protocol://" };
     }
 };

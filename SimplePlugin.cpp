@@ -6,9 +6,6 @@
 #include "core/SubscriptionAdapter.hpp"
 #include "ui/Interface.hpp"
 
-#include <QDateTime>
-#include <QLabel>
-#include <QMetaEnum>
 bool SimplePlugin::InitializePlugin(const QString &, const QJsonObject &)
 {
     emit PluginLog("Initialize plugin.");

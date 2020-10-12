@@ -13,7 +13,7 @@ bool SimplePlugin::InitializePlugin(const QString &, const QJsonObject &_setting
     outboundHandler = std::make_shared<SimpleSerializer>();
     eventHandler = std::make_shared<SimpleEventHandler>();
     kernelInterface = std::make_shared<SimpleKernelInterface>();
-    subscriptionAdapter = std::make_shared<SimpleSubscriptionAdapter>();
+    subscriptionAdapter = std::make_shared<SimpleSubsriptionInterface>();
     guiInterface = new SimpleGUIInterface();
     return true;
 }

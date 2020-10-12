@@ -10,7 +10,7 @@ class SimpleSerializer : public Qv2rayPlugin::PluginOutboundHandler
     const QString SerializeOutbound(const QString &protocol,  //
                                     const QString &alias,     //
                                     const QString &groupName, //
-                                    const QJsonObject &object) const override
+                                    const QJsonObject &object, const QJsonObject &) const override
     {
         Q_UNUSED(protocol)
         Q_UNUSED(alias)
@@ -32,6 +32,14 @@ class SimpleSerializer : public Qv2rayPlugin::PluginOutboundHandler
         object[Qv2rayPlugin::INFO_PROTOCOL] = protocol;
         return object;
     }
+
+    const void SetOutboundInfo(const QString &protocol, const Qv2rayPlugin::OutboundInfoObject &info, QJsonObject &outbound) const override
+    {
+        Q_UNUSED(protocol)
+        Q_UNUSED(outbound)
+        Q_UNUSED(info)
+    }
+
     const QList<QString> SupportedProtocols() const override
     {
         return { "fake_protocol" };

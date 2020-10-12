@@ -1,10 +1,23 @@
 #pragma once
 #include "QvPluginInterface.hpp"
-class SimpleSubscriptionAdapter : public Qv2rayPlugin::PluginSubscriptionAdapter
+
+class SimpleSubscriptionDecoder : public Qv2rayPlugin::SubscriptionDecoder
 {
   public:
-    explicit SimpleSubscriptionAdapter() : Qv2rayPlugin::PluginSubscriptionAdapter()
+    explicit SimpleSubscriptionDecoder() : Qv2rayPlugin::SubscriptionDecoder()
     {
     }
-    ~SimpleSubscriptionAdapter(){};
+    ~SimpleSubscriptionDecoder(){};
+};
+
+class SimpleSubsriptionInterface : public Qv2rayPlugin::SubscriptionInterface
+{
+    QList<Qv2rayPlugin::ProtocolInfoObject> SupportedSubscriptionTypes() const
+    {
+        return {};
+    }
+    std::shared_ptr<Qv2rayPlugin::SubscriptionDecoder> GetSubscriptionDecoder(const QString &type) const
+    {
+        return {};
+    }
 };

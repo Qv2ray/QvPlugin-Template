@@ -9,6 +9,7 @@ class SimpleKernel : public Qv2rayPlugin::PluginKernel
     void SetConnectionSettings(const QMap<Qv2rayPlugin::KernelOptionFlags, QVariant> &settings, const QJsonObject &connectionInfo) override;
     bool StartKernel() override;
     bool StopKernel() override;
+    QString GetKernelName() const override;
 };
 
 class SimpleKernelInterface : public Qv2rayPlugin::PluginKernelInterface

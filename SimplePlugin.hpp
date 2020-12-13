@@ -35,9 +35,9 @@ class SimplePlugin
                  },
                  UPDATE_GITHUB_RELEASE };
     }
-
+    ~SimplePlugin(){};
     bool InitializePlugin(const QString &, const QJsonObject &) override;
-    //
+
   signals:
     void PluginLog(const QString &) const override;
     void PluginErrorMessageBox(const QString &, const QString &) const override;

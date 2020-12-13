@@ -3,6 +3,10 @@
 SimpleKernel::SimpleKernel() : Qv2rayPlugin::PluginKernel()
 {
 }
+QString SimpleKernel::GetKernelName() const
+{
+    return "Fake Name";
+}
 bool SimpleKernel::StartKernel()
 {
     return true;

@@ -13,9 +13,7 @@ jobs:
         platform: [ubuntu-20.04, macos-latest, windows-latest]
         include:
           - platform: windows-latest
-            arch: x64
             qtarch: win64_msvc2019_64
-            cmakearch: x64
       fail-fast: false
         
     runs-on: ${{ matrix.platform }}
@@ -44,7 +42,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           toolset: 14.2
-          arch: ${{ matrix.arch }}
+          arch: x64
       - name: Cache Qt
         id: cache-qt
         uses: actions/cache@v1
@@ -73,7 +71,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.cmakearch }} -DQVPLUGIN_USE_QT6=ON
+          cmake .. -DCMAKE_BUILD_TYPE=Release -A x64 -DQVPLUGIN_USE_QT6=ON
           cmake --build . --parallel $(nproc) --config Release
 # --------------------------------------------------------
       - name: macOS - ${{ matrix.qt_version }} - Generate Dependencies and Build
@@ -98,19 +96,19 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release -DQVPLUGIN_USE_QT6=ON
           cmake --build . --parallel $(nproc)
 # ========================================================================================================= Deployments
-      - name: Win-${{ matrix.arch }} - ${{ matrix.qt_version }} - Uploading artifact
+      - name: Win - ${{ matrix.qt_version }} - Uploading artifact
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.Windows-${{ matrix.arch }}.qt${{ matrix.qt_version }}.dll
+          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.Windows.Qt${{ matrix.qt_version }}.dll
           path: build/Release/${{ steps.get_name.outputs.NAME }}.dll
-      - name: Win-${{ matrix.arch }} - ${{ matrix.qt_version }} - Upload binaries to release
+      - name: Win - ${{ matrix.qt_version }} - Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         if: github.event_name == 'release' && matrix.platform == 'windows-latest'
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/Release/${{ steps.get_name.outputs.NAME }}.dll
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Windows-${{ matrix.arch }}.dll
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Windows-Qt6.dll
           tag: ${{ github.ref }}
           overwrite: true
 # --------------------------------------------------------
@@ -118,7 +116,7 @@ jobs:
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.macOS-${{ matrix.arch }}.qt${{ matrix.qt_version }}.so
+          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.macOS.Qt${{ matrix.qt_version }}.so
           path: build/lib${{ steps.get_name.outputs.NAME }}.so
       - name: macOS - ${{ matrix.qt_version }} - Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
@@ -126,7 +124,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/lib${{ steps.get_name.outputs.NAME }}.so
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.macOS-${{ matrix.arch }}.so
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.macOS-Qt6.so
           tag: ${{ github.ref }}
           overwrite: true
 # --------------------------------------------------------
@@ -134,7 +132,7 @@ jobs:
         if: matrix.platform == 'ubuntu-20.04'
         uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.linux-${{ matrix.arch }}.qt${{ matrix.qt_version }}.so
+          name: ${{ steps.get_name.outputs.NAME }}-${{ github.sha }}.Linux.Qt${{ matrix.qt_version }}.so
           path: build/lib${{ steps.get_name.outputs.NAME }}.so
       - name: Linux - ${{ matrix.qt_version }} - Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
@@ -142,6 +140,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/lib${{ steps.get_name.outputs.NAME }}.so
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.linux-${{ matrix.arch }}.so
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Linux-Qt6.so
           tag: ${{ github.ref }}
           overwrite: true

@@ -108,7 +108,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/Release/${{ steps.get_name.outputs.NAME }}.dll
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Windows-Qt6.dll
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Windows.Qt6.dll
           tag: ${{ github.ref }}
           overwrite: true
 # --------------------------------------------------------
@@ -124,7 +124,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/lib${{ steps.get_name.outputs.NAME }}.so
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.macOS-Qt6.so
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.macOS.Qt6.so
           tag: ${{ github.ref }}
           overwrite: true
 # --------------------------------------------------------
@@ -140,6 +140,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/lib${{ steps.get_name.outputs.NAME }}.so
-          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Linux-Qt6.so
+          asset_name: ${{ steps.get_name.outputs.NAME }}.${{ steps.get_version.outputs.VERSION }}.Linux.Qt6.so
           tag: ${{ github.ref }}
           overwrite: true
